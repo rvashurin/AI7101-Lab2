@@ -60,3 +60,6 @@ coverage.xml
 # Misc
 *.DS_Store # macOS specific
 Thumbs.db # Windows specific
+
+# Visualization outputs
+**/*.png
