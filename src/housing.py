@@ -17,6 +17,11 @@ BASE_PIPELINE = [
     ("scaler", StandardScaler()),
 ]
 
+LINEAR_GRID = {
+    "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0],
+    "model__l1_ratio": [0.0, 0.5, 1.0],
+}
+
 MODELS = {
     "simple_elastic": {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=1000))]),
