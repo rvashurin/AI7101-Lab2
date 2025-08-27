@@ -1,0 +1,62 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# Virtual environment
+venv/
+.venv/
+env/
+.env/
+
+# Data files and models (consider using Git LFS for large files)
+data/
+models/
+*.pkl
+*.h5
+*.pth
+*.joblib
+*.npy
+*.npz
+*.csv
+*.tsv
+*.json
+*.parquet
+
+# Jupyter Notebook specific files
+.ipynb_checkpoints/
+*.ipynb_checkpoints/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# IDE specific files
+.idea/  # PyCharm
+.vscode/ # VS Code
+*.sublime-project
+*.sublime-workspace
+*.swp # Vim swap files
+
+# Environment variables and sensitive data
+.env
+config.ini
+secrets.py
+
+# Build artifacts
+dist/
+build/
+
+# Testing and coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+
+# Misc
+*.DS_Store # macOS specific
+Thumbs.db # Windows specific
