@@ -2,9 +2,7 @@
 
 This lab is focused on switching branches in git, conflict resolution when syncing feature branches with main branch, working with forks, and creating pull requests. It is based on the reference solution to the Lab 1.
 
-The original repo (this one) contains a new feature branch `add_third_poly` that adds a 3rd degree polynomial regression experiment. Unfortunately, someone else was working on another feature - expanding grid of the parameters for linear regression. This feature was merged in [another pull request](https://github.com/rvashurin/AI7101-Lab2/pull/1) before new experiment was added. When [pull request](https://github.com/rvashurin/AI7101-Lab2/pull/2) was opened for the polynomial update, merge conflict emerged with the main branch:
-
-![[Pasted image 20250827220906.png]]
+The original repo (this one) contains a new feature branch `add_third_poly` that adds a 3rd degree polynomial regression experiment. Unfortunately, someone else was working on another feature - expanding grid of the parameters for linear regression. This feature was merged in [another pull request](https://github.com/rvashurin/AI7101-Lab2/pull/1) before new experiment was added. When [pull request](https://github.com/rvashurin/AI7101-Lab2/pull/2) was opened for the polynomial update, merge conflict emerged with the main branch.
 
 Your task is to fix these conflicts and create a new pull request that does not conflict with the main branch.
 
