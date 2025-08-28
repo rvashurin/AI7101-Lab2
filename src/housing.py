@@ -37,7 +37,7 @@ MODELS = {
         ),
         "param_grid": LINEAR_GRID,
     },
-    "poly_elastic_2": {
+    "poly_elastic": {
         "pipeline": Pipeline(
             BASE_PIPELINE
             + [
