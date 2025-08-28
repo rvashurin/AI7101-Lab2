@@ -25,7 +25,6 @@ LINEAR_GRID = {
 MODELS = {
     "simple_elastic": {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=1000))]),
-<<<<<<< HEAD
         "param_grid": LINEAR_GRID,
     },
     "poly_elastic_3": {
