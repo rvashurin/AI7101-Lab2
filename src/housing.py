@@ -33,7 +33,7 @@ MODELS = {
             BASE_PIPELINE
             + [
                 ("power", "passthrough"),
-                ("poly", PolynomialFeatures(degree=2, include_bias=False)),
+                ("poly", PolynomialFeatures(degree=3, include_bias=False)),
                 ("model", ElasticNet(max_iter=5000)),
             ]
         ),
