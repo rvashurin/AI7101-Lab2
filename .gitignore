@@ -34,7 +34,7 @@ tmp/
 temp/
 
 # IDE specific files
-.idea/  # PyCharm
+.idea/
 .vscode/ # VS Code
 *.sublime-project
 *.sublime-workspace
