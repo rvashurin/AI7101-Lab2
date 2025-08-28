@@ -11,14 +11,13 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 import pandas as pd
 import numpy as np
 
-
 BASE_PIPELINE = [
     ("imputer", SimpleImputer(strategy="median")),
     ("scaler", StandardScaler()),
 ]
 
 LINEAR_GRID = {
-    "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0],
+    "model__alpha": [0.001, 0.01, 0.1, 0.3, 0.5, 0.7, 1.0, 10.0],  # 保留 main 扩展
     "model__l1_ratio": [0.0, 0.5, 1.0],
 }
 
@@ -27,31 +26,25 @@ MODELS = {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=1000))]),
         "param_grid": LINEAR_GRID,
     },
-    "poly_elastic_3": {
-        "pipeline": Pipeline(
-            BASE_PIPELINE
-            + [
-                ("poly", PolynomialFeatures(degree=3, include_bias=False)),
-                ("model", ElasticNet(max_iter=1000)),
-            ]
-        ),
+    "poly_elastic_2": {
+        "pipeline": Pipeline(BASE_PIPELINE + [
+            ("poly", PolynomialFeatures(degree=2, include_bias=False)),
+            ("model", ElasticNet(max_iter=1000))
+        ]),
         "param_grid": LINEAR_GRID,
     },
-    "poly_elastic_2": {
-        "pipeline": Pipeline(
-            BASE_PIPELINE
-            + [
-                ("poly", PolynomialFeatures(degree=2, include_bias=False)),
-                ("model", ElasticNet(max_iter=1000)),
-            ]
-        ),
+    "poly_elastic_3": {
+        "pipeline": Pipeline(BASE_PIPELINE + [
+            ("poly", PolynomialFeatures(degree=3, include_bias=False)),
+            ("model", ElasticNet(max_iter=1000))
+        ]),
         "param_grid": LINEAR_GRID,
     },
     "knn": {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", KNeighborsRegressor())]),
         "param_grid": {
-            "model__n_neighbors": [2, 5, 10, 20, 50],
-            "model__p": [1, 2],
+            "model__n_neighbors": [2,5,10,20,50],
+            "model__p": [1,2],
         },
     },
 }
