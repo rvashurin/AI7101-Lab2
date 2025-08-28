@@ -19,33 +19,92 @@ BASE_PIPELINE = [
 
 MODELS = {
     "simple_elastic": {
-        "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=1000))]),
+        "pipeline": Pipeline(BASE_PIPELINE + [("power", "passthrough"), ("model", ElasticNet(max_iter=5000))]),
         "param_grid": {
-            "model__alpha": [0.001, 0.01, 0.1, 0.3, 0.5, 0.7, 1.0, 10.0],
-            "model__l1_ratio": [0.0, 0.5, 1.0],
+            "imputer__strategy": ["median", "mean"],
+            "scaler": [StandardScaler(), RobustScaler()],
+            "power": ["passthrough", PowerTransformer(standardize=False)],
+            "model__alpha": np.logspace(-4, 2, 13).tolist(),
+            "model__l1_ratio": [0.0, 0.2, 0.5, 0.8, 1.0],
         },
     },
     "poly_elastic": {
         "pipeline": Pipeline(
             BASE_PIPELINE
             + [
-                ("poly", PolynomialFeatures(degree=2, include_bias=False)),
-                ("model", ElasticNet(max_iter=1000)),
+                ("power", "passthrough"),
+                ("poly", PolynomialFeatures(degree=3, include_bias=False)),
+                ("model", ElasticNet(max_iter=5000)),
             ]
         ),
         "param_grid": {
-            "model__alpha": [0.001, 0.01, 0.1, 0.3, 0.5, 0.7, 1.0, 10.0],
-            "model__l1_ratio": [0.0, 0.5, 1.0],
+            "imputer__strategy": ["median", "mean"],
+            "scaler": [StandardScaler(), RobustScaler()],
+            "power": ["passthrough", PowerTransformer(standardize=False)],
+            "poly__degree": [2, 3],
+            "poly__interaction_only": [False, True],
+            "model__alpha": np.logspace(-4, 1, 10).tolist(),
+            "model__l1_ratio": [0.0, 0.25, 0.5, 0.75, 1.0],
         },
     },
     "knn": {
-        "pipeline": Pipeline(BASE_PIPELINE + [("model", KNeighborsRegressor())]),
+        "pipeline": Pipeline(BASE_PIPELINE + [("power", "passthrough"), ("model", KNeighborsRegressor())]),
         "param_grid": {
-            "model__n_neighbors": [2, 5, 10, 20, 50],
+            "imputer__strategy": ["median", "mean"],
+            "scaler": [StandardScaler(), RobustScaler()],
+            "power": ["passthrough", PowerTransformer(standardize=False)],
+            "model__n_neighbors": [2, 3, 5, 8, 13, 21, 34, 55],
+            "model__weights": ["uniform", "distance"],
             "model__p": [1, 2],
+            "model__leaf_size": [15, 30, 45],
+        },
+    },
+    "svr": {
+        "pipeline": Pipeline(BASE_PIPELINE + [("power", "passthrough"), ("model", SVR())]),
+        "param_grid": {
+            "imputer__strategy": ["median", "mean"],
+            "scaler": [StandardScaler(), RobustScaler()],
+            "power": ["passthrough", PowerTransformer(standardize=False)],
+            "model__kernel": ["rbf", "linear"],
+            "model__C": np.logspace(-2, 3, 10).tolist(),
+            "model__epsilon": np.logspace(-3, 0, 8).tolist(),
+            "model__gamma": ["scale", "auto"],
+        },
+    },
+    "huber": {
+        "pipeline": Pipeline(BASE_PIPELINE + [("power", "passthrough"), ("model", HuberRegressor(max_iter=5000))]),
+        "param_grid": {
+            "imputer__strategy": ["median", "mean"],
+            "scaler": [StandardScaler(), RobustScaler()],
+            "power": ["passthrough", PowerTransformer(standardize=False)],
+            "model__alpha": np.logspace(-6, -1, 6).tolist(),
+            "model__epsilon": [1.1, 1.35, 1.5, 1.75, 2.0],
+        },
+    },
+    "rf": {
+        "pipeline": Pipeline([("imputer", SimpleImputer(strategy="median")), ("model", RandomForestRegressor(random_state=0))]),
+        "param_grid": {
+            "model__n_estimators": [200, 400, 800],
+            "model__max_depth": [None, 6, 10, 16, 24],
+            "model__min_samples_split": [2, 5, 10],
+            "model__min_samples_leaf": [1, 2, 4],
+            "model__max_features": ["sqrt", "log2", None],
+        },
+    },
+    "hgb": {
+        "pipeline": Pipeline([("imputer", SimpleImputer(strategy="median")), ("model", HistGradientBoostingRegressor(random_state=0))]),
+        "param_grid": {
+            "model__learning_rate": [0.03, 0.06, 0.1],
+            "model__max_depth": [None, 3, 5, 7],
+            "model__max_leaf_nodes": [15, 31, 63],
+            "model__min_samples_leaf": [10, 20, 40],
+            "model__l2_regularization": [0.0, 0.1, 1.0],
         },
     },
 }
+
+
+
 
 
 def set_seed(seed: int = 1):
@@ -93,6 +152,7 @@ def train(
     grid_search.fit(X_train, y_train)
 
     return grid_search
+
 
 
 def eval(grid_search: GridSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame):
