@@ -1,3 +1,4 @@
+
 import random
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import fetch_california_housing
@@ -18,7 +19,7 @@ BASE_PIPELINE = [
 ]
 
 LINEAR_GRID = {
-    "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0],
+    "model__alpha": [0.001, 0.01, 0.1, 0.3, 0.5, 0.7, 1.0, 10.0],
     "model__l1_ratio": [0.0, 0.5, 1.0],
 }
 
