@@ -4,6 +4,8 @@ __pycache__/
 *.pyd
 *.pyo
 
+
+.idea/*
 # Virtual environment
 venv/
 .venv/
@@ -63,3 +65,4 @@ Thumbs.db # Windows specific
 
 # Visualization outputs
 **/*.png
+**/figures/
