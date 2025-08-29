@@ -86,7 +86,8 @@ def train(
         pipeline = MODELS[model]["pipeline"]
         param_grid = MODELS[model]["param_grid"]
     except KeyError:
-        raise ValueError(f"Model {model} is not defined in the MODELS dictionary.")
+        raise ValueError(
+            f"Model {model} is not defined in the MODELS dictionary.")
 
     cv = KFold(n_splits=cv_splits, shuffle=True, random_state=random_state)
 
