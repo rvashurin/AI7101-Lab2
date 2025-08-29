@@ -24,7 +24,7 @@ LINEAR_GRID = {
 
 MODELS = {
     "simple_elastic": {
-        "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=10000))]),
+        "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=1000))]),
         "param_grid": LINEAR_GRID,
     },
     "poly_elastic_3": {
@@ -109,7 +109,7 @@ def eval(grid_search: GridSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame):
 
     y_pred = best.predict(X_test)
 
-    rmse = mean_squared_error(y_test, y_pred, squared=False)
+    rmse = mean_squared_error(y_test, y_pred)
     mae = mean_absolute_error(y_test, y_pred)
     r2 = r2_score(y_test, y_pred)
 
@@ -117,6 +117,6 @@ def eval(grid_search: GridSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame):
         "estimator": best["model"],
         "preds": y_pred,
         "rmse": rmse,
-        "mae": mae,
+        "mae": mae,r
         "r2": r2,
     }
