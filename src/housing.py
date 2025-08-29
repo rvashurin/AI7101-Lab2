@@ -46,6 +46,7 @@ MODELS = {
             ]
         ),
         "param_grid": LINEAR_GRID,
+
     },
     "knn": {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", KNeighborsRegressor())]),
