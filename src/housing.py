@@ -25,17 +25,10 @@ LINEAR_GRID = {
 MODELS = {
     "simple_elastic": {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", ElasticNet(max_iter=1000))]),
-        "param_grid": LINEAR_GRID,
-    },
-    "poly_elastic_3": {
-        "pipeline": Pipeline(
-            BASE_PIPELINE
-            + [
-                ("poly", PolynomialFeatures(degree=3, include_bias=False)),
-                ("model", ElasticNet(max_iter=1000)),
-            ]
-        ),
-        "param_grid": LINEAR_GRID,
+        "param_grid": {
+            "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0],
+            "model__l1_ratio": [0.0, 0.2, 0.5, 0.8, 1.0],
+        },
     },
     "poly_elastic_2": {
         "pipeline": Pipeline(
@@ -45,8 +38,25 @@ MODELS = {
                 ("model", ElasticNet(max_iter=1000)),
             ]
         ),
-        "param_grid": LINEAR_GRID,
+        "param_grid": {
+            "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0],
+            "model__l1_ratio": [0.0, 0.5, 1.0],
+        },
     },
+    "poly_elastic_3": {
+    "pipeline": Pipeline(
+        BASE_PIPELINE
+        + [
+            ("poly", PolynomialFeatures(degree=3, include_bias=False)),
+            ("model", ElasticNet(max_iter=1000)),
+        ]
+    ),
+    "param_grid": {
+        "poly__degree": [3],
+        "model__alpha": [0.001, 0.01, 0.1, 1.0, 10.0],
+        "model__l1_ratio": [0.0, 0.2, 0.5, 0.8, 1.0],
+    },
+},
     "knn": {
         "pipeline": Pipeline(BASE_PIPELINE + [("model", KNeighborsRegressor())]),
         "param_grid": {
