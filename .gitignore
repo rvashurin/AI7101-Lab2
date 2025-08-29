@@ -64,3 +64,5 @@ Thumbs.db # Windows specific
 # Visualization outputs
 **/*.png
 **/figures/
+
+lab2/
