@@ -117,6 +117,6 @@ def eval(grid_search: GridSearchCV, X_test: pd.DataFrame, y_test: pd.DataFrame):
         "estimator": best["model"],
         "preds": y_pred,
         "rmse": rmse,
-        "mae": mae,r
+        "mae": mae,
         "r2": r2,
     }
